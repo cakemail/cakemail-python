@@ -1,14 +1,12 @@
 import time
 
-import inflection
-
 import cakemail_openapi
 from cakemail.token import Token
 from cakemail_openapi import ApiClient
 from cakemail_openapi import TokenApi, Configuration
 
 
-class Api:
+class CakemailApi:
     api_client = None
     config = None
     _token: Token = None
@@ -31,7 +29,6 @@ class Api:
     token: cakemail_openapi.TokenApi
     transactional_email: cakemail_openapi.TransactionalEmailApi
     user: cakemail_openapi.UserApi
-    models: cakemail_openapi.models
 
     def __init__(self, username, password):
         self.config = Configuration(host='https://api.cakemail.dev')
@@ -47,7 +44,8 @@ class Api:
                     api.endswith('Api')]:
             setattr(
                 self,
-                inflection.underscore(api.split('Api')[0]),
+                ''.join(['_' + i.lower() if i.isupper() else i for i in
+                         api.split('Api')[0]]).lstrip('_'),
                 getattr(cakemail_openapi, api)(self.api_client)
             )
 
@@ -57,4 +55,4 @@ class Api:
             if self._token.expires_at < time.time():
                 self._token.refresh()
 
-        return super(Api, self).__getattribute__(name)
+        return super(CakemailApi, self).__getattribute__(name)

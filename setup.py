@@ -8,19 +8,24 @@ requirements = [
     'six',
     'urllib3',
     'certifi',
-    'python-dateutil',
-    'inflection'
+    'python-dateutil'
 ]
 
 setup(
     name='cakemail',
-    version='1.0',
+    version='1.0.0-b4',
     description='Cakemail Next-gen API client',
     long_description=README,
     long_description_content_type="text/markdown",
     url='https://github.com/cakemail/pycakemail',
     license='MIT',
-    packages=['cakemail'],
+    packages=[
+        'cakemail',
+        'cakemail_openapi',
+        'cakemail_openapi.api',
+        'cakemail_openapi.models'
+    ],
+    include_package_data=True,
     install_requires=requirements,
     zip_safe=False
 )

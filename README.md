@@ -8,28 +8,105 @@ pip install cakemail
 
 # Usage
 
-Simply create an object from the `cakemail.Api` class and call one of the API operations (refer to the online documentation)
+Create an object from the `CakemailApi` class with your Cakemail username and password.  The object will take care of
+all authorization mechanisms automatically.
 
 ```python
-import cakemail
+from cakemail import CakemailApi, models
 
-api = cakemail.Api(username='your@email.com', password='somepassword')
-
-my_account = api.account.get_self_account()
-print(my_account)
+api = CakemailApi(username='your@email.com', password='somepassword')
 ```
 
-# Examples
+Call one of the API operations (refer to the online documentation)
+
+```python
+my_account = api.account.get_self_account()
+```
+
+# API operations
+
+API operations accept the OpenAPI models as well as python dictionaries.
+
+```python
+sender = api.sender.create_sender(
+    create_sender=models.CreateSender(
+        name='My Sender',
+        email='someone@gmail.com'
+    )
+)
+sender = api.sender.create_sender(
+    create_sender={
+        'name': 'My Sender',
+        'email': 'someone@gmail.com'    
+    }
+)
+```
+
+You can also unpack a dictionary for all Operation arguments, allowing you to express the entire payload as a single
+dictionary :
+
+```python
+sender = api.sender.create_sender(
+    **{
+        'create_sender': {
+            'name': 'My Sender',
+            'email': 'someone@gmail.com'        
+        }   
+    }
+)
+```
+
+# Operation Examples
+
+## Create a Sender
+```python
+sender = api.sender.create_sender(
+    models.CreateSender(name='My Sender', email='someone@gmail.com')
+)
+
+# look for the confirmation ID in your email inbox
+api.sender.confirm_sender(
+    models.ConfirmSender(confirmation_id='[confirmation ID]')
+)
+```
 
 ## Create a Contact List
 
 ```python
-import cakemail
-
-api = cakemail.Api(username='email@internet.com', password='password')
-
 my_new_list = api.list.create_list(
-    list=api.models.List(name='my new list')
+    list=models.List(
+        name='my new list',
+        default_sender=models.Sender(id=sender.id)
+    )
 )
-print(my_new_list)
+```
+
+## Send a transactional email
+
+```python
+# expressed as OpenAPI models
+api.transactional_email.send_email(
+    email=models.Email(
+        email='destination@gmail.com',
+        sender=sender,
+        content=models.EmailContent(
+            subject='Subject line',
+            text='Email body',
+            encoding='utf-8'
+        )
+    )
+)
+
+# expressed as a dictionary
+api.transactional_email.send_email(
+    email={
+        'email': 'destination@gmail.com',
+        'sender': sender,
+        'content': {
+            'subject': 'Subject line',
+            'text': 'Email body',
+            'encoding': 'utf-8' 
+        }
+    }
+)
 ```

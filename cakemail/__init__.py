@@ -1,1 +1,2 @@
-from .api import Api
+from .cakemailapi import CakemailApi
+from cakemail_openapi import models

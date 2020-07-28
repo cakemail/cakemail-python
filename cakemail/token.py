@@ -1,7 +1,6 @@
 import time
 
-from cake_openapi import TokenApi, Configuration, ApiException
-from cakemail.exceptions import AuthException
+from cakemail_openapi import TokenApi, Configuration
 
 
 class Token:
@@ -32,52 +31,34 @@ class Token:
 
     def create(self):
         """ Create the initial token """
-        try:
-            if self.refresh_token and not self.email and not self.password:
-                response = self.token_api.refresh_token(
-                    refresh_token=self.refresh_token
-                )
-            else:
-                credentials = {
-                    'username': self.email,
-                    'password': self.password
-                }
-                if self.account_id:
-                    credentials['client_id'] = self.account_id
-
-                response = self.token_api.create_token(**credentials)
-
-        except ApiException as err:
-            if err.status == 401:
-                raise AuthException(err)
-            raise
-
-        except:
-            raise
-
+        if self.refresh_token and not self.email and not self.password:
+            response = self.token_api.refresh_token(
+                refresh_token=self.refresh_token
+            )
         else:
+            credentials = {
+                'username': self.email,
+                'password': self.password
+            }
+            if self.account_id:
+                credentials['client_id'] = self.account_id
+
+            response = self.token_api.create_token(**credentials)
+
+        self.access_token = response.access_token
+        self.refresh_token = response.refresh_token
+        self.expires_at = time.time() + response.expires_in
+        self.configuration.access_token = self.access_token
+
+    def refresh(self):
+        """ Refresh the token """
+        if self.refresh_token:
+            response = self.token_api.refresh_token(
+                refresh_token=self.refresh_token
+            )
             self.access_token = response.access_token
             self.refresh_token = response.refresh_token
             self.expires_at = time.time() + response.expires_in
             self.configuration.access_token = self.access_token
-
-    def refresh(self):
-        """ Refresh the token """
-        try:
-            if self.refresh_token:
-                response = self.token_api.refresh_token(
-                    refresh_token=self.refresh_token
-                )
-                self.access_token = response.access_token
-                self.refresh_token = response.refresh_token
-                self.expires_at = time.time() + response.expires_in
-                self.configuration.access_token = self.access_token
-            else:
-                self.create()
-
-        except ApiException as err:
-            if err.status == 401:
-                return False
-            raise AuthException(err)
         else:
-            return True
+            self.create()
