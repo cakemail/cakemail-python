@@ -6,9 +6,9 @@ from cakemail_openapi import ApiClient
 from cakemail_openapi import TokenApi, Configuration
 
 
-class CakemailApi:
-    api_client = None
-    config = None
+class Api:
+    _api_client = None
+    _config = None
     _token: Token = None
 
     account: cakemail_openapi.AccountApi
@@ -31,13 +31,13 @@ class CakemailApi:
     user: cakemail_openapi.UserApi
 
     def __init__(self, username, password):
-        self.config = Configuration(host='https://api.cakemail.dev')
-        self.api_client = ApiClient(self.config)
+        self._config = Configuration(host='https://api.cakemail.dev')
+        self._api_client = ApiClient(self._config)
         self._token = Token(
             email=username,
             password=password,
-            token_api=TokenApi(self.api_client),
-            configuration=self.config
+            token_api=TokenApi(self._api_client),
+            configuration=self._config
         )
 
         for api in [api for api in dir(cakemail_openapi) if
@@ -46,13 +46,13 @@ class CakemailApi:
                 self,
                 ''.join(['_' + i.lower() if i.isupper() else i for i in
                          api.split('Api')[0]]).lstrip('_'),
-                getattr(cakemail_openapi, api)(self.api_client)
+                getattr(cakemail_openapi, api)(self._api_client)
             )
 
     def __getattribute__(self, name):
         """ Refresh the token if expired """
-        if name not in ['api_client', 'config', '_token']:
+        if name not in ['_api_client', '_config', '_token']:
             if self._token.expires_at < time.time():
                 self._token.refresh()
 
-        return super(CakemailApi, self).__getattribute__(name)
+        return super(Api, self).__getattribute__(name)

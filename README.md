@@ -12,9 +12,9 @@ Create an object from the `CakemailApi` class with your Cakemail username and pa
 all authorization mechanisms automatically.
 
 ```python
-from cakemail import CakemailApi, models
+import cakemail
 
-api = CakemailApi(username='your@email.com', password='somepassword')
+api = cakemail.Api(username='your@email.com', password='somepassword')
 ```
 
 Call one of the API operations (refer to the online documentation)
@@ -29,7 +29,7 @@ API operations accept the OpenAPI models as well as python dictionaries.
 
 ```python
 sender = api.sender.create_sender(
-    create_sender=models.CreateSender(
+    create_sender=cakemail.models.CreateSender(
         name='My Sender',
         email='someone@gmail.com'
     )
@@ -61,12 +61,12 @@ sender = api.sender.create_sender(
 ## Create a Sender
 ```python
 sender = api.sender.create_sender(
-    models.CreateSender(name='My Sender', email='someone@gmail.com')
+    cakemail.models.CreateSender(name='My Sender', email='someone@gmail.com')
 )
 
 # look for the confirmation ID in your email inbox
 api.sender.confirm_sender(
-    models.ConfirmSender(confirmation_id='[confirmation ID]')
+    cakemail.models.ConfirmSender(confirmation_id='[confirmation ID]')
 )
 ```
 
@@ -74,9 +74,9 @@ api.sender.confirm_sender(
 
 ```python
 my_new_list = api.list.create_list(
-    list=models.List(
+    list=cakemail.models.List(
         name='my new list',
-        default_sender=models.Sender(id=sender.id)
+        default_sender=cakemail.models.Sender(id=sender.id)
     )
 )
 ```
@@ -86,10 +86,10 @@ my_new_list = api.list.create_list(
 ```python
 # expressed as OpenAPI models
 api.transactional_email.send_email(
-    email=models.Email(
+    email=cakemail.models.Email(
         email='destination@gmail.com',
         sender=sender,
-        content=models.EmailContent(
+        content=cakemail.models.EmailContent(
             subject='Subject line',
             text='Email body',
             encoding='utf-8'

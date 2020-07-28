@@ -13,7 +13,7 @@ requirements = [
 
 setup(
     name='cakemail',
-    version='1.0.0-b4',
+    version='1.0.7',
     description='Cakemail Next-gen API client',
     long_description=README,
     long_description_content_type="text/markdown",
