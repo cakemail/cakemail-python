@@ -1,4 +1,4 @@
-class Response:
+class Response(object):
     obj: object = None
 
     def __init__(self, obj):
