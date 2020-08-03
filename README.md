@@ -149,5 +149,9 @@ Pagination is stored in the `pagination` property of all methods returning a lis
 ```python
 campaigns = api.campaign.list(with_count=True)
 
-print(f'page: {campaigns.page}, per_page: {campaigns.per_page}, count: {campaigns.count}')
+print(f"""
+  page: {campaigns.pagination.page},
+  per_page: {campaigns.pagination.per_page},
+  count: {campaigns.pagination.count}
+  """)
 ```
