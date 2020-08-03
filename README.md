@@ -132,7 +132,7 @@ print(f'id: {my_user.id}, email: {my_user.email}')
 ```
 ## Iterate through lists
 
-Some methods return a list of resources on which your can can iterate directly:
+Some methods return a list of resources on which you can iterate directly:
 
 ```python
 campaigns = api.campaign.list()
