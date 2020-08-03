@@ -20,7 +20,7 @@ api = cakemail.Api(username='your@email.com', password='somepassword')
 Call one of the API operations (refer to the online documentation)
 
 ```python
-my_account = api.account.get_self_account()
+my_account = api.account.get_self()
 ```
 
 # API operations
@@ -28,13 +28,15 @@ my_account = api.account.get_self_account()
 API operations accept the OpenAPI models as well as python dictionaries.
 
 ```python
-sender = api.sender.create_sender(
-    create_sender=cakemail.models.CreateSender(
+from cakemail.models import CreateSender
+
+sender = api.sender.create(
+    create_sender=CreateSender(
         name='My Sender',
         email='someone@gmail.com'
     )
 )
-sender = api.sender.create_sender(
+sender = api.sender.create(
     create_sender={
         'name': 'My Sender',
         'email': 'someone@gmail.com'    
@@ -46,7 +48,7 @@ You can also unpack a dictionary for all Operation arguments, allowing you to ex
 dictionary :
 
 ```python
-sender = api.sender.create_sender(
+sender = api.sender.create(
     **{
         'create_sender': {
             'name': 'My Sender',
@@ -60,23 +62,27 @@ sender = api.sender.create_sender(
 
 ## Create a Sender
 ```python
-sender = api.sender.create_sender(
-    cakemail.models.CreateSender(name='My Sender', email='someone@gmail.com')
+from cakemail.models import CreateSender, ConfirmSender
+
+sender = api.sender.create(
+    CreateSender(name='My Sender', email='someone@gmail.com')
 )
 
 # look for the confirmation ID in your email inbox
-api.sender.confirm_sender(
-    cakemail.models.ConfirmSender(confirmation_id='[confirmation ID]')
+api.sender.confirm(
+    ConfirmSender(confirmation_id='[confirmation ID]')
 )
 ```
 
 ## Create a Contact List
 
 ```python
-my_new_list = api.list.create_list(
-    list=cakemail.models.List(
+from cakemail.models import List, Sender
+
+my_new_list = api.list.create(
+    list=List(
         name='my new list',
-        default_sender=cakemail.models.Sender(id=sender.id)
+        default_sender=Sender(id=sender.id)
     )
 )
 ```
@@ -84,12 +90,14 @@ my_new_list = api.list.create_list(
 ## Send a transactional email
 
 ```python
+from cakemail.models import Email, EmailContent
+
 # expressed as OpenAPI models
-api.transactional_email.send_email(
-    email=cakemail.models.Email(
+api.transactional_email.send(
+    email=Email(
         email='destination@gmail.com',
         sender=sender,
-        content=cakemail.models.EmailContent(
+        content=EmailContent(
             subject='Subject line',
             text='Email body',
             encoding='utf-8'
@@ -98,7 +106,7 @@ api.transactional_email.send_email(
 )
 
 # expressed as a dictionary
-api.transactional_email.send_email(
+api.transactional_email.send(
     email={
         'email': 'destination@gmail.com',
         'sender': sender,
@@ -109,4 +117,37 @@ api.transactional_email.send_email(
         }
     }
 )
+```
+
+## Accessing data
+
+The CakemailAPI always return its data under the `data` object.  For simplicity, the resource data is accessible
+from the returned response directly:
+
+```python
+my_user = api.user.get_self()
+
+print(f'id: {my_user.id}, email: {my_user.email}')
+
+```
+## Iterate through lists
+
+Some methods return a list of resources on which your can can iterate directly:
+
+```python
+campaigns = api.campaign.list()
+for campaign in campaigns:
+    html = api.campaign.render(campaign_id=campaign.id).html
+    print(f'id: {campaign.id}, name: {campaign.name}, html: {html}')
+
+```
+
+## Pagination
+
+Pagination is stored in the `pagination` property of all methods returning a list of resources:
+
+```python
+campaigns = api.campaign.list(with_count=True)
+
+print(f'page: {campaigns.page}, per_page: {campaigns.per_page}, count: {campaigns.count}')
 ```
