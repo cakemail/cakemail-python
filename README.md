@@ -155,3 +155,14 @@ print(f"""
   count: {campaigns.pagination.count}
   """)
 ```
+
+## Dictionary representation
+
+The API methods return response objects; if you prefer to work with a python dict representation, use the `to_dict` method:
+
+```python
+campaign_dict = api.campaign.get(campaign_id=123).to_dict()
+
+for campaign in api.campaign.list():
+    print(campaign.to_dict())
+```
