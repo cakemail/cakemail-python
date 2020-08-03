@@ -17,7 +17,6 @@ from cakemail_openapi.api.segment_api import SegmentApi
 from cakemail_openapi.api.sender_api import SenderApi
 from cakemail_openapi.api.sub_account_api import SubAccountApi
 from cakemail_openapi.api.suppressed_email_api import SuppressedEmailApi
-from cakemail_openapi.api.test_email_api import TestEmailApi
 from cakemail_openapi.api.token_api import TokenApi
 from cakemail_openapi.api.transactional_email_api import TransactionalEmailApi
 from cakemail_openapi.api.user_api import UserApi
