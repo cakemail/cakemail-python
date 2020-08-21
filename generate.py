@@ -11,7 +11,15 @@ class Method(BaseModel):
     @validator('name')
     def validate_name(cls, v):
         if v == 'import':
-            return 'imp'
+            return 'import_contacts'
+        if v == 'patch':
+            return 'update'
+        if v == 'patch_self':
+            return 'update_self'
+        if v == 'get_campaign_links':
+            return 'get_campaign_link'
+        if v == 'get_emails':
+            return 'get_email'
         return v
 
 

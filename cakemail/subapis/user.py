@@ -9,6 +9,6 @@ class User(WrappedApi):
     get_self: UserApi.get_self_user
     get: UserApi.get_user
     list: UserApi.list_users
-    patch: UserApi.patch_user
+    update: UserApi.patch_user
     suspend: UserApi.suspend_user
     unsuspend: UserApi.unsuspend_user

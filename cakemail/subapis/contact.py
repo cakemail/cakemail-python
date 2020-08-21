@@ -7,6 +7,6 @@ class Contact(WrappedApi):
     create: ContactApi.create_contact
     delete: ContactApi.delete_contact
     get: ContactApi.get_contact
-    imp: ContactApi.import_contacts
-    patch: ContactApi.patch_contact
+    import_contacts: ContactApi.import_contacts
+    update: ContactApi.patch_contact
     unsubscribe: ContactApi.unsubscribe_contact
