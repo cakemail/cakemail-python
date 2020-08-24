@@ -9,5 +9,5 @@ class List(WrappedApi):
     delete: ListApi.delete_list
     get: ListApi.get_list
     list: ListApi.list_lists
-    patch: ListApi.patch_list
+    update: ListApi.patch_list
     unarchive: ListApi.unarchive_list

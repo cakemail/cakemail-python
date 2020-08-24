@@ -8,4 +8,4 @@ class Segment(WrappedApi):
     delete: SegmentApi.delete_segment
     get: SegmentApi.get_segment
     list: SegmentApi.list_segments
-    patch: SegmentApi.patch_segment
+    update: SegmentApi.patch_segment

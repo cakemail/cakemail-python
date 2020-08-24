@@ -8,4 +8,4 @@ class Form(WrappedApi):
     delete: FormApi.delete_form
     get: FormApi.get_form
     list: FormApi.list_forms
-    patch: FormApi.patch_form
+    update: FormApi.patch_form

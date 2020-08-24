@@ -9,4 +9,4 @@ class Sender(WrappedApi):
     delete: SenderApi.delete_sender
     get: SenderApi.get_sender
     list: SenderApi.list_senders
-    patch: SenderApi.patch_sender
+    update: SenderApi.patch_sender

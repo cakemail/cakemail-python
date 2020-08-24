@@ -10,7 +10,7 @@ class Campaign(WrappedApi):
     delete: CampaignApi.delete_campaign
     get: CampaignApi.get_campaign
     list: CampaignApi.list_campaigns
-    patch: CampaignApi.patch_campaign
+    update: CampaignApi.patch_campaign
     render: CampaignApi.render_campaign
     reschedule: CampaignApi.reschedule_campaign
     resume: CampaignApi.resume_campaign
