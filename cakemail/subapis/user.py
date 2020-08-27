@@ -10,5 +10,7 @@ class User(WrappedApi):
     get: UserApi.get_user
     list: UserApi.list_users
     update: UserApi.patch_user
+    reset_password: UserApi.reset_user_password
+    forgot_my_password: UserApi.forgot_my_password
     suspend: UserApi.suspend_user
     unsuspend: UserApi.unsuspend_user

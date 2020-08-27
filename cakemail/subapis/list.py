@@ -4,6 +4,7 @@ from cakemail_openapi import ListApi
 
 class List(WrappedApi):
     """ List view of ListApi """
+    accept_policy: ListApi.accept_list_policy
     archive: ListApi.archive_list
     create: ListApi.create_list
     delete: ListApi.delete_list
