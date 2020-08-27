@@ -18,3 +18,4 @@ class Campaign(WrappedApi):
     suspend: CampaignApi.suspend_campaign
     unarchive: CampaignApi.unarchive_campaign
     unschedule: CampaignApi.unschedule_campaign
+    send_test_email: CampaignApi.send_test_email
