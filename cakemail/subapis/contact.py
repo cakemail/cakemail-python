@@ -8,5 +8,7 @@ class Contact(WrappedApi):
     delete: ContactApi.delete_contact
     get: ContactApi.get_contact
     import_contacts: ContactApi.import_contacts
+    list: ContactApi.list_contacts_of_list
+    list_from_segment: ContactApi.list_contacts_of_segment
     update: ContactApi.patch_contact
     unsubscribe: ContactApi.unsubscribe_contact
