@@ -9,4 +9,5 @@ class Sender(WrappedApi):
     delete: SenderApi.delete_sender
     get: SenderApi.get_sender
     list: SenderApi.list_senders
+    resend_confirmation: SenderApi.resend_confirmation_email
     update: SenderApi.patch_sender
