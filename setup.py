@@ -14,7 +14,7 @@ requirements = [
 
 setup(
     name='cakemail',
-    version='1.1.0.4',
+    version='1.1.0.5',
     description='Cakemail Next-gen API client',
     python_requires='>=3.6',
     long_description=README,

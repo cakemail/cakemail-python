@@ -22,6 +22,8 @@ from .report import Report
 
 
 class Api:
+    _token = None
+
     account: Account
     campaign: Campaign
     contact: Contact
@@ -42,18 +44,19 @@ class Api:
 
     def __init__(
             self,
-            username,
-            password,
+            username = None,
+            password = None,
             url='https://api.cakemail.dev'
     ):
         self._config = Configuration(host=url)
         self._api_client = ApiClient(self._config)
-        self._token = Token(
-            email=username,
-            password=password,
-            token_api=TokenApi(self._api_client),
-            configuration=self._config
-        )
+        if username and password:
+            self._token = Token(
+                email=username,
+                password=password,
+                token_api=TokenApi(self._api_client),
+                configuration=self._config
+            )
 
         self.account = Account(AccountApi(self._api_client))
         self.campaign = Campaign(CampaignApi(self._api_client))
@@ -75,7 +78,7 @@ class Api:
 
     def __getattribute__(self, name):
         if name not in ['_api_client', '_config', '_token']:
-            if self._token.expires_at < time.time():
+            if self._token and self._token.expires_at < time.time():
                 self._token.refresh()
 
         return super(Api, self).__getattribute__(name)
