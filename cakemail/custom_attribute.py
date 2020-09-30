@@ -1,15 +1,20 @@
 from cakemail_openapi import CustomAttributeApi
+from cakemail.wrapper import WrappedApi
 
 
-class CustomAttribute:
-    def __init__(self, api):
-        self.__api = CustomAttributeApi(api)
-        self.create = self.__api.create_custom_attribute
-        self.delete = self.__api.delete_custom_attribute
-        self.get = self.__api.get_custom_attribute
-        self.list = self.__api.list_custom_attributes
-
+class CustomAttribute(WrappedApi):
     create: CustomAttributeApi.create_custom_attribute
     delete: CustomAttributeApi.delete_custom_attribute
     get: CustomAttributeApi.get_custom_attribute
     list: CustomAttributeApi.list_custom_attributes
+
+    def __init__(self, superclass):
+        super().__init__(
+            superclass=superclass,
+            namemap={
+                'create': 'create_custom_attribute',
+                'delete': 'delete_custom_attribute',
+                'get': 'get_custom_attribute',
+                'list': 'list_custom_attributes',
+            }
+        )

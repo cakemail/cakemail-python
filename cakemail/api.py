@@ -1,6 +1,6 @@
 import time
 
-from cakemail_openapi import Configuration, ApiClient, TokenApi
+from cakemail_openapi import Configuration, ApiClient, TokenApi, AccountApi, CampaignApi, ContactApi, CustomAttributeApi, DomainApi, FormApi, ListApi, LogApi, LogoApi, SegmentApi, SenderApi, SuppressedEmailApi, UserApi, TemplateApi, TransactionalEmailApi, SubAccountApi, ReportApi
 from .token import Token
 from .account import Account
 from .campaign import Campaign
@@ -55,25 +55,23 @@ class Api:
             configuration=self._config
         )
 
-        self.account = Account(self._api_client)
-        self.template = Template(self._api_client)
-        self.account = Account(self._api_client)
-        self.campaign = Campaign(self._api_client)
-        self.contact = Contact(self._api_client)
-        self.custom_attribute = CustomAttribute(self._api_client)
-        self.domain = Domain(self._api_client)
-        self.form = Form(self._api_client)
-        self.list = List(self._api_client)
-        self.log = Log(self._api_client)
-        self.logo = Logo(self._api_client)
-        self.segment = Segment(self._api_client)
-        self.sender = Sender(self._api_client)
-        self.suppressed_email = SuppressedEmail(self._api_client)
-        self.user = User(self._api_client)
-        self.template = Template(self._api_client)
-        self.transactional_email = TransactionalEmail(self._api_client)
-        self.sub_account = SubAccount(self._api_client)
-        self.report = Report(self._api_client)
+        self.account = Account(AccountApi(self._api_client))
+        self.campaign = Campaign(CampaignApi(self._api_client))
+        self.contact = Contact(ContactApi(self._api_client))
+        self.custom_attribute = CustomAttribute(CustomAttributeApi(self._api_client))
+        self.domain = Domain(DomainApi(self._api_client))
+        self.form = Form(FormApi(self._api_client))
+        self.list = List(ListApi(self._api_client))
+        self.log = Log(LogApi(self._api_client))
+        self.logo = Logo(LogoApi(self._api_client))
+        self.segment = Segment(SegmentApi(self._api_client))
+        self.sender = Sender(SenderApi(self._api_client))
+        self.suppressed_email = SuppressedEmail(SuppressedEmailApi(self._api_client))
+        self.user = User(UserApi(self._api_client))
+        self.template = Template(TemplateApi(self._api_client))
+        self.transactional_email = TransactionalEmail(TransactionalEmailApi(self._api_client))
+        self.sub_account = SubAccount(SubAccountApi(self._api_client))
+        self.report = Report(ReportApi(self._api_client))
 
     def __getattribute__(self, name):
         if name not in ['_api_client', '_config', '_token']:

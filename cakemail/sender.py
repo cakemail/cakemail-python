@@ -1,17 +1,8 @@
 from cakemail_openapi import SenderApi
+from cakemail.wrapper import WrappedApi
 
 
-class Sender:
-    def __init__(self, api):
-        self.__api = SenderApi(api)
-        self.confirm = self.__api.confirm_sender
-        self.create = self.__api.create_sender
-        self.delete = self.__api.delete_sender
-        self.get = self.__api.get_sender
-        self.list = self.__api.list_senders
-        self.update = self.__api.patch_sender
-        self.resend_confirmation = self.__api.resend_confirmation_email
-
+class Sender(WrappedApi):
     confirm: SenderApi.confirm_sender
     create: SenderApi.create_sender
     delete: SenderApi.delete_sender
@@ -19,3 +10,17 @@ class Sender:
     list: SenderApi.list_senders
     update: SenderApi.patch_sender
     resend_confirmation: SenderApi.resend_confirmation_email
+
+    def __init__(self, superclass):
+        super().__init__(
+            superclass=superclass,
+            namemap={
+                'confirm': 'confirm_sender',
+                'create': 'create_sender',
+                'delete': 'delete_sender',
+                'get': 'get_sender',
+                'list': 'list_senders',
+                'update': 'patch_sender',
+                'resend_confirmation': 'resend_confirmation_email',
+            }
+        )

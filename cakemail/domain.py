@@ -1,13 +1,18 @@
 from cakemail_openapi import DomainApi
+from cakemail.wrapper import WrappedApi
 
 
-class Domain:
-    def __init__(self, api):
-        self.__api = DomainApi(api)
-        self.update = self.__api.patch_domains
-        self.show = self.__api.show_domains
-        self.validate = self.__api.validate_domains
-
+class Domain(WrappedApi):
     update: DomainApi.patch_domains
     show: DomainApi.show_domains
     validate: DomainApi.validate_domains
+
+    def __init__(self, superclass):
+        super().__init__(
+            superclass=superclass,
+            namemap={
+                'update': 'patch_domains',
+                'show': 'show_domains',
+                'validate': 'validate_domains',
+            }
+        )

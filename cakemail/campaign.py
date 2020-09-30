@@ -1,26 +1,8 @@
 from cakemail_openapi import CampaignApi
+from cakemail.wrapper import WrappedApi
 
 
-class Campaign:
-    def __init__(self, api):
-        self.__api = CampaignApi(api)
-        self.archive = self.__api.archive_campaign
-        self.cancel = self.__api.cancel_campaign
-        self.create = self.__api.create_campaign
-        self.delete = self.__api.delete_campaign
-        self.get = self.__api.get_campaign
-        self.list = self.__api.list_campaigns
-        self.list_links = self.__api.list_links
-        self.update = self.__api.patch_campaign
-        self.render = self.__api.render_campaign
-        self.reschedule = self.__api.reschedule_campaign
-        self.resume = self.__api.resume_campaign
-        self.schedule = self.__api.schedule_campaign
-        self.send_test_email = self.__api.send_test_email
-        self.suspend = self.__api.suspend_campaign
-        self.unarchive = self.__api.unarchive_campaign
-        self.unschedule = self.__api.unschedule_campaign
-
+class Campaign(WrappedApi):
     archive: CampaignApi.archive_campaign
     cancel: CampaignApi.cancel_campaign
     create: CampaignApi.create_campaign
@@ -37,3 +19,26 @@ class Campaign:
     suspend: CampaignApi.suspend_campaign
     unarchive: CampaignApi.unarchive_campaign
     unschedule: CampaignApi.unschedule_campaign
+
+    def __init__(self, superclass):
+        super().__init__(
+            superclass=superclass,
+            namemap={
+                'archive': 'archive_campaign',
+                'cancel': 'cancel_campaign',
+                'create': 'create_campaign',
+                'delete': 'delete_campaign',
+                'get': 'get_campaign',
+                'list': 'list_campaigns',
+                'list_links': 'list_links',
+                'update': 'patch_campaign',
+                'render': 'render_campaign',
+                'reschedule': 'reschedule_campaign',
+                'resume': 'resume_campaign',
+                'schedule': 'schedule_campaign',
+                'send_test_email': 'send_test_email',
+                'suspend': 'suspend_campaign',
+                'unarchive': 'unarchive_campaign',
+                'unschedule': 'unschedule_campaign',
+            }
+        )

@@ -1,9 +1,14 @@
 from cakemail_openapi import TransactionalEmailApi
+from cakemail.wrapper import WrappedApi
 
 
-class TransactionalEmail:
-    def __init__(self, api):
-        self.__api = TransactionalEmailApi(api)
-        self.send = self.__api.send_email
-
+class TransactionalEmail(WrappedApi):
     send: TransactionalEmailApi.send_email
+
+    def __init__(self, superclass):
+        super().__init__(
+            superclass=superclass,
+            namemap={
+                'send': 'send_email',
+            }
+        )

@@ -1,17 +1,8 @@
 from cakemail_openapi import SubAccountApi
+from cakemail.wrapper import WrappedApi
 
 
-class SubAccount:
-    def __init__(self, api):
-        self.__api = SubAccountApi(api)
-        self.create = self.__api.create_account
-        self.delete = self.__api.delete_account
-        self.get = self.__api.get_account
-        self.list = self.__api.list_accounts
-        self.update = self.__api.patch_account
-        self.suspend = self.__api.suspend_account
-        self.unsuspend = self.__api.unsuspend_account
-
+class SubAccount(WrappedApi):
     create: SubAccountApi.create_account
     delete: SubAccountApi.delete_account
     get: SubAccountApi.get_account
@@ -19,3 +10,17 @@ class SubAccount:
     update: SubAccountApi.patch_account
     suspend: SubAccountApi.suspend_account
     unsuspend: SubAccountApi.unsuspend_account
+
+    def __init__(self, superclass):
+        super().__init__(
+            superclass=superclass,
+            namemap={
+                'create': 'create_account',
+                'delete': 'delete_account',
+                'get': 'get_account',
+                'list': 'list_accounts',
+                'update': 'patch_account',
+                'suspend': 'suspend_account',
+                'unsuspend': 'unsuspend_account',
+            }
+        )

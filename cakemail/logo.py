@@ -1,9 +1,14 @@
 from cakemail_openapi import LogoApi
+from cakemail.wrapper import WrappedApi
 
 
-class Logo:
-    def __init__(self, api):
-        self.__api = LogoApi(api)
-        self.upload_default = self.__api.upload_default_logo
-
+class Logo(WrappedApi):
     upload_default: LogoApi.upload_default_logo
+
+    def __init__(self, superclass):
+        super().__init__(
+            superclass=superclass,
+            namemap={
+                'upload_default': 'upload_default_logo',
+            }
+        )
