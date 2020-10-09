@@ -9,12 +9,12 @@ requirements = [
     'urllib3',
     'certifi',
     'python-dateutil',
-    'cakemail-openapi==1.1.0'
+    'cakemail-openapi==1.1.7'
 ]
 
 setup(
     name='cakemail',
-    version='1.1.2.0',
+    version='1.1.7',
     description='Cakemail Next-gen API client',
     python_requires='>=3.6',
     long_description=README,
