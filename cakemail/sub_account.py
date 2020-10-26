@@ -9,7 +9,7 @@ class SubAccount(WrappedApi):
     get: SubAccountApi.get_account
     list: SubAccountApi.list_accounts
     update: SubAccountApi.patch_account
-    resend_confirmation: SubAccountApi.resend_account_verification
+    resend_verification: SubAccountApi.resend_account_verification
     suspend: SubAccountApi.suspend_account
     unsuspend: SubAccountApi.unsuspend_account
 
@@ -23,7 +23,7 @@ class SubAccount(WrappedApi):
                 'get': 'get_account',
                 'list': 'list_accounts',
                 'update': 'patch_account',
-                'resend_confirmation': 'resend_account_verification',
+                'resend_verification': 'resend_account_verification',
                 'suspend': 'suspend_account',
                 'unsuspend': 'unsuspend_account',
             }
