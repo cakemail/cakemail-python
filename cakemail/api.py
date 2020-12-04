@@ -1,8 +1,9 @@
 import time
 
-from cakemail_openapi import Configuration, ApiClient, TokenApi, AccountApi, CampaignApi, ContactApi, CustomAttributeApi, DomainApi, FormApi, ListApi, LogApi, LogoApi, SegmentApi, SenderApi, SuppressedEmailApi, UserApi, TemplateApi, TransactionalEmailApi, SubAccountApi, ReportApi
+from cakemail_openapi import Configuration, ApiClient, TokenApi, AccountApi, AutomationApi, CampaignApi, ContactApi, CustomAttributeApi, DomainApi, FormApi, ListApi, LogApi, LogoApi, SegmentApi, SenderApi, SuppressedEmailApi, UserApi, TemplateApi, TransactionalEmailApi, SubAccountApi, ReportApi
 from .token import Token
 from .account import Account
+from .automation import Automation
 from .campaign import Campaign
 from .contact import Contact
 from .custom_attribute import CustomAttribute
@@ -25,6 +26,7 @@ class Api:
     _token = None
 
     account: Account
+    automation: Automation
     campaign: Campaign
     contact: Contact
     custom_attribute: CustomAttribute
@@ -59,6 +61,7 @@ class Api:
             )
 
         self.account = Account(AccountApi(self._api_client))
+        self.automation = Automation(AutomationApi(self._api_client))
         self.campaign = Campaign(CampaignApi(self._api_client))
         self.contact = Contact(ContactApi(self._api_client))
         self.custom_attribute = CustomAttribute(CustomAttributeApi(self._api_client))

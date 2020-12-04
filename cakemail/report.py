@@ -4,6 +4,7 @@ from cakemail.wrapper import WrappedApi
 
 class Report(WrappedApi):
     get_account: ReportApi.get_account_stats
+    get_action: ReportApi.get_action_stats
     get_campaign_link: ReportApi.get_campaign_links_stats
     get_campaign: ReportApi.get_campaign_stats
     get_email: ReportApi.get_emails_stats
@@ -15,6 +16,7 @@ class Report(WrappedApi):
             superclass=superclass,
             namemap={
                 'get_account': 'get_account_stats',
+                'get_action': 'get_action_stats',
                 'get_campaign_link': 'get_campaign_links_stats',
                 'get_campaign': 'get_campaign_stats',
                 'get_email': 'get_emails_stats',
