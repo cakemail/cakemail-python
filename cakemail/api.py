@@ -1,8 +1,9 @@
 import time
 
-from cakemail_openapi import Configuration, ApiClient, TokenApi, AccountApi, CampaignApi, ContactApi, CustomAttributeApi, DomainApi, FormApi, ListApi, LogApi, LogoApi, SegmentApi, SenderApi, SuppressedEmailApi, UserApi, TemplateApi, TransactionalEmailApi, SubAccountApi, ReportApi
+from cakemail_openapi import Configuration, ApiClient, TokenApi, AccountApi, ActionApi, CampaignApi, ContactApi, CustomAttributeApi, DomainApi, FormApi, ListApi, LogApi, LogoApi, ReportApi, SegmentApi, SenderApi, SubAccountApi, SuppressedEmailApi, UserApi, TemplateApi, TransactionalEmailApi, WorkflowApi
 from .token import Token
 from .account import Account
+from .action import Action
 from .campaign import Campaign
 from .contact import Contact
 from .custom_attribute import CustomAttribute
@@ -11,20 +12,22 @@ from .form import Form
 from .list import List
 from .log import Log
 from .logo import Logo
+from .report import Report
 from .segment import Segment
 from .sender import Sender
+from .sub_account import SubAccount
 from .suppressed_email import SuppressedEmail
 from .user import User
 from .template import Template
 from .transactional_email import TransactionalEmail
-from .sub_account import SubAccount
-from .report import Report
+from .workflow import Workflow
 
 
 class Api:
     _token = None
 
     account: Account
+    action: Action
     campaign: Campaign
     contact: Contact
     custom_attribute: CustomAttribute
@@ -33,14 +36,15 @@ class Api:
     list: List
     log: Log
     logo: Logo
+    report: Report
     segment: Segment
     sender: Sender
+    sub_account: SubAccount
     suppressed_email: SuppressedEmail
     user: User
     template: Template
     transactional_email: TransactionalEmail
-    sub_account: SubAccount
-    report: Report
+    workflow: Workflow
 
     def __init__(
             self,
@@ -59,6 +63,7 @@ class Api:
             )
 
         self.account = Account(AccountApi(self._api_client))
+        self.action = Action(ActionApi(self._api_client))
         self.campaign = Campaign(CampaignApi(self._api_client))
         self.contact = Contact(ContactApi(self._api_client))
         self.custom_attribute = CustomAttribute(CustomAttributeApi(self._api_client))
@@ -67,14 +72,15 @@ class Api:
         self.list = List(ListApi(self._api_client))
         self.log = Log(LogApi(self._api_client))
         self.logo = Logo(LogoApi(self._api_client))
+        self.report = Report(ReportApi(self._api_client))
         self.segment = Segment(SegmentApi(self._api_client))
         self.sender = Sender(SenderApi(self._api_client))
+        self.sub_account = SubAccount(SubAccountApi(self._api_client))
         self.suppressed_email = SuppressedEmail(SuppressedEmailApi(self._api_client))
         self.user = User(UserApi(self._api_client))
         self.template = Template(TemplateApi(self._api_client))
         self.transactional_email = TransactionalEmail(TransactionalEmailApi(self._api_client))
-        self.sub_account = SubAccount(SubAccountApi(self._api_client))
-        self.report = Report(ReportApi(self._api_client))
+        self.workflow = Workflow(WorkflowApi(self._api_client))
 
     def __getattribute__(self, name):
         if name not in ['_api_client', '_config', '_token']:
