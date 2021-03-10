@@ -1,6 +1,6 @@
 import time
 
-from cakemail_openapi import Configuration, ApiClient, TokenApi, AccountApi, ActionApi, CampaignApi, ContactApi, CustomAttributeApi, DomainApi, FormApi, ListApi, LogApi, LogoApi, ReportApi, SegmentApi, SenderApi, SubAccountApi, SuppressedEmailApi, UserApi, TemplateApi, TransactionalEmailApi, WorkflowApi
+from cakemail_openapi import Configuration, ApiClient, TokenApi, AccountApi, ActionApi, CampaignApi, ContactApi, CustomAttributeApi, DomainApi, FormApi, ListApi, LogApi, LogoApi, ReportApi, SegmentApi, SenderApi, SubAccountApi, SuppressedEmailApi, UserApi, TemplateApi, TransactionalEmailApi, WorkflowApi, CampaignBlueprintApi, WorkflowBlueprintApi
 from .token import Token
 from .account import Account
 from .action import Action
@@ -21,6 +21,8 @@ from .user import User
 from .template import Template
 from .transactional_email import TransactionalEmail
 from .workflow import Workflow
+from .campaign_blueprint import CampaignBlueprint
+from .workflow_blueprint import WorkflowBlueprint
 
 
 class Api:
@@ -45,6 +47,8 @@ class Api:
     template: Template
     transactional_email: TransactionalEmail
     workflow: Workflow
+    campaign_blueprint: CampaignBlueprint
+    workflow_blueprint: WorkflowBlueprint
 
     def __init__(
             self,
@@ -81,6 +85,8 @@ class Api:
         self.template = Template(TemplateApi(self._api_client))
         self.transactional_email = TransactionalEmail(TransactionalEmailApi(self._api_client))
         self.workflow = Workflow(WorkflowApi(self._api_client))
+        self.campaign_blueprint = CampaignBlueprint(CampaignBlueprintApi(self._api_client))
+        self.workflow_blueprint = WorkflowBlueprint(WorkflowBlueprintApi(self._api_client))
 
     def __getattribute__(self, name):
         if name not in ['_api_client', '_config', '_token']:

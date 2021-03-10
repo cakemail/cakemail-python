@@ -44,20 +44,6 @@ sender = api.sender.create(
 )
 ```
 
-You can also unpack a dictionary for all Operation arguments, allowing you to express the entire payload as a single
-dictionary :
-
-```python
-sender = api.sender.create(
-    **{
-        'create_sender': {
-            'name': 'My Sender',
-            'email': 'someone@gmail.com'        
-        }   
-    }
-)
-```
-
 # Operation Examples
 
 ## Create a Sender
@@ -67,15 +53,10 @@ from cakemail.models import CreateSender, ConfirmSender
 sender = api.sender.create(
     CreateSender(name='My Sender', email='someone@gmail.com')
 )
-
-# look for the confirmation ID in your email inbox
-api.sender.confirm(
-    ConfirmSender(confirmation_id='[confirmation ID]')
-)
 ```
+Look for a confirmation email in your inbox; click to the link to activate the sender.
 
 ## Create a Contact List
-
 ```python
 from cakemail.models import List, Sender
 
