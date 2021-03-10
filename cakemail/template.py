@@ -8,6 +8,7 @@ class Template(WrappedApi):
     get: TemplateApi.get_template
     list: TemplateApi.list_templates
     update: TemplateApi.patch_template
+    render: TemplateApi.render_template
 
     def __init__(self, superclass):
         super().__init__(
@@ -18,5 +19,6 @@ class Template(WrappedApi):
                 'get': 'get_template',
                 'list': 'list_templates',
                 'update': 'patch_template',
+                'render': 'render_template',
             }
         )
